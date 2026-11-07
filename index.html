@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="由 CSV 动态驱动的电影资料库">
+  <title>光影档案 · 电影资料库</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="hero">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="返回页面顶部">
+        <span class="brand-mark">M</span>
+        <span>光影档案</span>
+      </a>
+      <span class="data-label"><i></i> CSV 实时数据</span>
+    </nav>
+
+    <section id="top" class="hero-content">
+      <p class="eyebrow">MOVIE ARCHIVE · EXPERIMENT 15</p>
+      <h1>把值得记住的电影，<br><span>收藏在光影里。</span></h1>
+      <p class="hero-copy">数据来自 <code>movies.csv</code>。修改文件并刷新页面，电影资料将自动同步，无须改动 HTML。</p>
+    </section>
+
+    <section class="stats" aria-label="资料库统计">
+      <article><strong id="movieCount">--</strong><span>当前影片</span></article>
+      <article><strong id="averageRating">--</strong><span>平均评分</span></article>
+      <article><strong id="latestYear">--</strong><span>最新年份</span></article>
+    </section>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="电影筛选工具">
+      <label class="search-box" for="searchInput">
+        <span aria-hidden="true">⌕</span>
+        <input id="searchInput" type="search" placeholder="搜索电影、导演或类型…" autocomplete="off">
+      </label>
+
+      <label class="select-wrap" for="sortSelect">
+        <span>排序</span>
+        <select id="sortSelect">
+          <option value="rating-desc">评分：从高到低</option>
+          <option value="rating-asc">评分：从低到高</option>
+          <option value="year-desc">年份：从新到旧</option>
+          <option value="year-asc">年份：从旧到新</option>
+          <option value="name-asc">名称：A–Z</option>
+        </select>
+      </label>
+
+      <button id="reloadButton" class="reload-button" type="button">
+        <span aria-hidden="true">↻</span> 重新加载 CSV
+      </button>
+    </section>
+
+    <section class="result-heading">
+      <div>
+        <p class="section-kicker">CURATED COLLECTION</p>
+        <h2>电影收藏</h2>
+      </div>
+      <p id="resultMessage" aria-live="polite">正在读取数据…</p>
+    </section>
+
+    <section id="movieGrid" class="movie-grid" aria-live="polite" aria-busy="true"></section>
+
+    <section id="emptyState" class="empty-state" hidden>
+      <div>◎</div>
+      <h2>没有找到匹配的电影</h2>
+      <p>请尝试其他名称、导演或类型关键词。</p>
+    </section>
+
+    <section id="errorState" class="error-state" hidden role="alert">
+      <h2>CSV 数据加载失败</h2>
+      <p id="errorMessage"></p>
+      <p>请确认已通过 <code>python server.py</code> 启动本地服务器。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>数据最后加载：<time id="loadedAt">尚未加载</time></p>
+    <p>HTML + CSS + JavaScript + CSV + Python</p>
+  </footer>
+</body>
+</html>
